@@ -15,5 +15,5 @@ In `hal_stm_lvgl/tft/tft.h` you can enable/disable external frame buffer placeme
 The project was created with CubeIDE.
 
 ## Get started
-- Clone the project: `git clone https://github.com/littlevgl/stm32f429_disco_no_os_sw4stm32.git --recurse-submodules`
+- Clone the project: `git clone https://github.com/faoziaziz/stm32f429_disco_no_os_sw4stm32.git --recurse-submodules`
 - Import into CubeIDE
