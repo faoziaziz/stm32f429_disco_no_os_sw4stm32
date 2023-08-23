@@ -174,6 +174,7 @@ static void MX_USART1_UART_Init(void)
   if (HAL_UART_Init(&huart1) != HAL_OK)
   {
     Error_Handler();
+    HAL_MspInit();
   }
   /* USER CODE BEGIN USART1_Init 2 */
 
