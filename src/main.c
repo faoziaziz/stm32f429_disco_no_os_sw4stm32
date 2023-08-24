@@ -212,6 +212,7 @@ static void MX_USART2_UART_Init(void)
   if (HAL_UART_Init(&huart2) != HAL_OK)
   {
     Error_Handler();
+    HAL_MspInit();
   }
   /* USER CODE BEGIN USART2_Init 2 */
 
@@ -240,6 +241,7 @@ static void MX_USART3_UART_Init(void)
   if (HAL_UART_Init(&huart3) != HAL_OK)
   {
     Error_Handler();
+    HAL_MspInit();
   }
   /* USER CODE BEGIN USART3_Init 2 */
 
