@@ -24,11 +24,13 @@ static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_USART3_UART_Init(void);
+static void MX_UART4_Init(void);
 
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
+UART_HandleTypeDef huart4;
 
 int main(void)
 {
@@ -41,6 +43,7 @@ int main(void)
 	MX_USART1_UART_Init();
 	MX_USART2_UART_Init();
 	MX_USART3_UART_Init();
+	MX_UART4_Init();
 	/*Start up indication*/
 	BSP_LED_Init(LED3);
 	uint32_t i;
@@ -64,6 +67,7 @@ int main(void)
 		HAL_UART_Transmit(&huart1, "Ini dari uart1\r\n", strlen("Ini dari uart1\r\n"),100);
 		HAL_UART_Transmit(&huart2, "Ini dari uart2\r\n", strlen("Ini dari uart2\r\n"),100);
 		HAL_UART_Transmit(&huart3, "Ini dari uart3\r\n", strlen("Ini dari uart3\r\n"),100);
+		HAL_UART_Transmit(&huart3, "Ini dari uart4\r\n", strlen("Ini dari uart4\r\n"),100);
 
 		HAL_Delay(3);
 		lv_task_handler();
@@ -96,6 +100,8 @@ int main(void)
   */
 static void SystemClock_Config(void)
 {
+
+
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
   RCC_OscInitTypeDef RCC_OscInitStruct;
   RCC_PeriphCLKInitTypeDef  PeriphClkInitStruct;
@@ -246,6 +252,34 @@ static void MX_USART3_UART_Init(void)
   /* USER CODE BEGIN USART3_Init 2 */
 
   /* USER CODE END USART3_Init 2 */
+
+}
+
+static void MX_UART4_Init(void)
+{
+
+  /* USER CODE BEGIN UART4_Init 0 */
+
+  /* USER CODE END UART4_Init 0 */
+
+  /* USER CODE BEGIN UART4_Init 1 */
+
+  /* USER CODE END UART4_Init 1 */
+  huart4.Instance = UART4;
+  huart4.Init.BaudRate = 115200;
+  huart4.Init.WordLength = UART_WORDLENGTH_8B;
+  huart4.Init.StopBits = UART_STOPBITS_1;
+  huart4.Init.Parity = UART_PARITY_NONE;
+  huart4.Init.Mode = UART_MODE_TX_RX;
+  huart4.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart4.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN UART4_Init 2 */
+
+  /* USER CODE END UART4_Init 2 */
 
 }
 
