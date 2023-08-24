@@ -23,9 +23,12 @@ static void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
+static void MX_USART3_UART_Init(void);
+
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
+UART_HandleTypeDef huart3;
 
 int main(void)
 {
@@ -37,7 +40,7 @@ int main(void)
 	MX_GPIO_Init();
 	MX_USART1_UART_Init();
 	MX_USART2_UART_Init();
-
+	MX_USART3_UART_Init();
 	/*Start up indication*/
 	BSP_LED_Init(LED3);
 	uint32_t i;
@@ -58,8 +61,9 @@ int main(void)
 
 	while (1)
 	{
-		HAL_UART_Transmit(&huart1, "Ini dari uart1\r\n", strlen("Ini dari uart2\r\n"),100);
+		HAL_UART_Transmit(&huart1, "Ini dari uart1\r\n", strlen("Ini dari uart1\r\n"),100);
 		HAL_UART_Transmit(&huart2, "Ini dari uart2\r\n", strlen("Ini dari uart2\r\n"),100);
+		HAL_UART_Transmit(&huart3, "Ini dari uart3\r\n", strlen("Ini dari uart3\r\n"),100);
 
 		HAL_Delay(3);
 		lv_task_handler();
@@ -215,6 +219,34 @@ static void MX_USART2_UART_Init(void)
 
 }
 
+static void MX_USART3_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART3_Init 0 */
+
+  /* USER CODE END USART3_Init 0 */
+
+  /* USER CODE BEGIN USART3_Init 1 */
+
+  /* USER CODE END USART3_Init 1 */
+  huart3.Instance = USART3;
+  huart3.Init.BaudRate = 115200;
+  huart3.Init.WordLength = UART_WORDLENGTH_8B;
+  huart3.Init.StopBits = UART_STOPBITS_1;
+  huart3.Init.Parity = UART_PARITY_NONE;
+  huart3.Init.Mode = UART_MODE_TX_RX;
+  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART3_Init 2 */
+
+  /* USER CODE END USART3_Init 2 */
+
+}
+
 /**
   * @brief GPIO Initialization Function
   * @param None
@@ -227,6 +259,7 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
