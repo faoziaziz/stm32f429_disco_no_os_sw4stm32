@@ -18,6 +18,9 @@
 #include "hal_stm_lvgl/tft/tft.h"
 #include "hal_stm_lvgl/touchpad/touchpad.h"
 
+
+
+
 static void SystemClock_Config(void);
 
 static void MX_GPIO_Init(void);
@@ -26,16 +29,20 @@ static void MX_USART2_UART_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_UART4_Init(void);
 
-
+/* bikin interupt */
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
 UART_HandleTypeDef huart4;
 
+uint8_t Rx_data[10];
+
 int main(void)
 {
 
 	HAL_Init();
+
+
 
 	/* Configure the system clock to 180 MHz */
 	SystemClock_Config();
@@ -54,6 +61,8 @@ int main(void)
 
 	lv_init();
 
+	HAL_UART_Receive_IT (&huart4, Rx_data, 4);
+
 	tft_init();
 	touchpad_init();
 
@@ -64,14 +73,17 @@ int main(void)
 
 	while (1)
 	{
-		HAL_UART_Transmit(&huart1, "Ini dari uart1\r\n", strlen("Ini dari uart1\r\n"),100);
-		HAL_UART_Transmit(&huart2, "Ini dari uart2\r\n", strlen("Ini dari uart2\r\n"),100);
-		HAL_UART_Transmit(&huart3, "Ini dari uart3\r\n", strlen("Ini dari uart3\r\n"),100);
-		HAL_UART_Transmit(&huart3, "Ini dari uart4\r\n", strlen("Ini dari uart4\r\n"),100);
 
-		HAL_Delay(3);
-		lv_task_handler();
+
+		//HAL_Delay(3);
+		//lv_task_handler();
+		HAL_UART_Receive_IT (&huart4, Rx_data, 4);
 	}
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  HAL_UART_Receive_IT(&huart4, Rx_data, 4);
 }
 
 /**
